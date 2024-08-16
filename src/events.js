@@ -71,5 +71,5 @@ function attachEventNavigationListener(selectElement) {
 // Function to handle the select change event
 function handleSelectChange(event) {
   const selectedValue = event.target.value.toLowerCase();
-  window.location.href = import.meta.env.BASE_URL + `/events/${selectedValue}`;
+  window.location.href = `/events/${selectedValue}`;
 }

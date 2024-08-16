@@ -40,7 +40,7 @@ export function renderLoginPage() {
       })
     
       localStorage.setItem('token', response.data?.jwt);
-      window.location.href = import.meta.env.BASE_URL + '/';
+      window.location.href = '/';
     } catch (err) {
       toast.error(err.response.data?.data[0]?.messages[0].message);
     } finally {
