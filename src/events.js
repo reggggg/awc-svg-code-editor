@@ -9,7 +9,7 @@ export function getSelectedEventId() {
 }
 
 // Set the select value based on the current route dynamically
-export async function setEvents() {
+export async function setEvents(id) {
   const selectElement = document.getElementById('event-selector');
   
   // Set the select element to a loading state
@@ -35,7 +35,7 @@ export async function setEvents() {
     });
 
     // Get the current path and match it to the options
-    const path = getSelectedEventId();
+    const path = id ?? getSelectedEventId();
     const matchedOption = Array.from(selectElement.options).find(option => option.value === path);
 
     if (matchedOption) {

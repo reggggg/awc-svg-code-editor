@@ -1,15 +1,17 @@
+import { setEvents } from "../events";
 import { renderHomePage } from "../pages/home";
 import { renderLoginPage } from "../pages/login";
 
 export function router() {
-  const content = document.getElementById('app');
   const hash = window.location.hash.slice(1);
   const [route, param] = hash.split('/');
 
+  // Check for token
   if (!localStorage.getItem('token')) {
     return renderLoginPage();
   } 
 
+  // Default to home page if no route is provided
   if (!route) {
     return renderHomePage();
   }
@@ -21,10 +23,14 @@ export function router() {
     case 'login':
       renderLoginPage();
       break;
+    case 'events':
+      renderHomePage(); // Render the same UI as home
+      if (param) {
+        setEvents(param); // Call additional functions specific to the event
+      }
+      break;
     default:
-      content.innerHTML = '<h1>404</h1><p>Page not found.</p>';
+      document.getElementById('app').innerHTML = '<h1>404</h1><p>Page not found.</p>';
       break;
   }
 }
-
-
