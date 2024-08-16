@@ -1,9 +1,6 @@
-import '../style.css'
-import 'bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
-
-import { strapi } from '../src/client';
-import { toast } from '../src/toast';
+import { strapi } from '../client';
+import { toast } from '../toast';
+import { renderHomePage } from './home';
 
 export function renderLoginPage() {
   document.querySelector('#app').innerHTML = `
@@ -21,7 +18,7 @@ export function renderLoginPage() {
         <button id="login-save" type="submit" class="btn btn-primary mt-4">Login</button>
       </form>
     </div>
-  `
+  `;
 
   document.getElementById('login-form').addEventListener('submit', async function(event) {
     event.preventDefault();
@@ -33,14 +30,15 @@ export function renderLoginPage() {
 
     try {
       loginBtn.disabled = true;
-        // Simulating an API call for login
+      
       const response = await strapi.post('/auth/local', {
         identifier: username,
         password
-      })
-    
+      });
+
       localStorage.setItem('token', response.data?.jwt);
-      window.location.href = '/';
+      window.history.pushState({}, '', '/');
+      renderHomePage();
     } catch (err) {
       toast.error(err.response.data?.data[0]?.messages[0].message);
     } finally {

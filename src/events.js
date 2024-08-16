@@ -1,6 +1,7 @@
 import { strapi } from "./client";
 import { getFloorplan } from "./floorplans";
 import { editor } from "./editor";
+import { router } from "./js/router";
 
 export function getSelectedEventId() {
   const pathnames = document.location.pathname.split('/'); 
@@ -71,5 +72,7 @@ function attachEventNavigationListener(selectElement) {
 // Function to handle the select change event
 function handleSelectChange(event) {
   const selectedValue = event.target.value.toLowerCase();
-  window.location.href = `/events/${selectedValue}`;
+  window.history.pushState({}, '', `/events/${selectedValue}`);
+
+  router();
 }

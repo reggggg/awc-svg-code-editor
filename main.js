@@ -1,17 +1,11 @@
-import { renderHomePage } from "./pages/home";
-import { renderLoginPage } from "./pages/login";
+import './style.css';
+import 'bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-// Basic Router
-function router() {
-  if (!localStorage.getItem('token') || window.location.pathname.split('/')[1] === 'login') {
-    renderLoginPage();
-  } else {
-    renderHomePage();
-  }
-}
+import { router } from './src/js/router';
 
-// Listen for hash changes
-window.addEventListener('hashchange', router);
+// Listen for history changes
+window.addEventListener('popstate', router);
 
 // Initialize the app
 router();

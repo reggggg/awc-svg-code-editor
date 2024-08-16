@@ -1,17 +1,14 @@
-import '../style.css'
-import 'bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
-
 import Split from 'split.js';
-import { setEvents, getSelectedEventId } from '../src/events.js';
-import { initializeMonaco, editor } from '../src/editor.js';
-import { saveFloorplan } from '../src/floorplans.js';
+import { setEvents, getSelectedEventId } from '../events.js';
+import { initializeMonaco, editor } from '../editor.js';
+import { saveFloorplan } from '../floorplans.js';
+import { renderLoginPage } from './login.js';
 
 export function renderHomePage() {
   document.querySelector('#app').innerHTML = `
     <div>
       <nav class="navbar navbar-expand-sm navbar-dark bg-dark fixed-top px-2">
-        <a class="navbar-brand" href="#">Floorplan Uploader</a>
+        <a class="navbar-brand" href="#" id="home-link">Floorplan Uploader</a>
 
         <div class="d-flex gap-1 w-100 mx-1">
           <select id="event-selector" class="form-control w-auto"></select>
@@ -92,10 +89,11 @@ export function renderHomePage() {
     document.getElementById("file_upload").click();
   });
 
-    // Logout
+  // Logout
   document.getElementById("logout").addEventListener('click', function () {
     localStorage.removeItem('token');
-    window.location.href = '/login';
+    window.history.pushState({}, '', '/login');
+    renderLoginPage();
   });
 
   setEvents();
