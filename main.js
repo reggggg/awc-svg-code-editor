@@ -4,8 +4,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { router } from './src/js/router';
 
-// Listen for history changes
-window.addEventListener('popstate', router);
+// Listen for hash changes
+window.addEventListener('hashchange', router);
 
-// Initialize the app
-router();
+// Initial load
+window.addEventListener('load', router);
