@@ -14,9 +14,9 @@
     "vite": "^5.4.0"
   },
   "dependencies": {
+    "@daleighan/vanilla-js-router": "^0.1.2",
     "axios": "^1.7.4",
     "bootstrap": "^5.2.3",
-    "firebase": "^10.12.5",
     "jquery": "^3.6.1",
     "monaco-editor": "^0.34.1",
     "monaco-editor-webpack-plugin": "^7.0.1",
