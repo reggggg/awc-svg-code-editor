@@ -20,7 +20,9 @@ export class HomePage {
         <input type="file" id="file_upload" accept="image/svg+xml" style="display: none;" />
         <div id="main">
           <div id="editor"></div>
-          <div id="output"></div>
+          <div id="output-container" class="overflow-auto">
+            <div id="output"></div>
+          </div>
         </div>
         <div id="footer" class="bg-dark text-light">
           Copyright
@@ -30,7 +32,7 @@ export class HomePage {
   }
 
   init() {
-    Split(['#editor', '#output'], { gutterSize: 5 });
+    Split(['#editor', '#output-container'], { gutterSize: 5 });
 
     // Initialize the Monaco editor
     initializeMonaco('editor');
