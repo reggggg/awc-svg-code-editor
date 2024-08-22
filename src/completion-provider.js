@@ -233,10 +233,9 @@ export function getXmlCompletionProvider(monaco) {
           : getAvailableElements(monaco, lastOpenedTag, usedItems)
         : [];
       
-      console.log(suggestions);
-
       return {
-        suggestions: suggestions };
+        suggestions: suggestions 
+      };
     }
   };
 }

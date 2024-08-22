@@ -3,6 +3,7 @@ import { Events } from '../events.js';
 import { initializeMonaco, editor } from '../editor.js';
 import { generateDataToInjectInFloorplan, saveFloorplan } from '../floorplans.js';
 import { toast } from '../toast.js';
+import { debounce } from '../libs/helpers.js';
 
 export class HomePage {
   constructor() {
@@ -33,33 +34,38 @@ export class HomePage {
     `;
   }
 
+
   init() {
+    let isDataInjected = false;
+
     Split(['#editor', '#output-container'], { gutterSize: 5 });
 
     // Initialize the Monaco editor
     initializeMonaco('editor');
 
-    function render() {
-      document.getElementById('output').innerHTML = editor.getValue();
+    const render = () => {
+      isDataInjected = false;
+      document.getElementById('output').innerHTML = editor.getValue()
     }
 
+    const debouncedRender = debounce(render, 300);
+
     editor.onDidChangeModelContent((event) => {
-      render();
+      debouncedRender();
     });
 
     // Inject data
-    let isInjected = false;
     const btnInjectData = document.getElementById("inject");
     btnInjectData.addEventListener('click', async function() {
       btnInjectData.disabled = true;
       btnInjectData.textContent = 'Injecting...';
 
       try {
-        if (isInjected === true) throw new Error('Data is already injected');
+        if (isDataInjected === true) throw new Error('Data is already injected');
 
         const isGenerateDataSuccess = await generateDataToInjectInFloorplan();
         if (isGenerateDataSuccess) {
-          isInjected = true;
+          isDataInjected = true;
         }
       } catch (err) {
         toast.error(err.message);
