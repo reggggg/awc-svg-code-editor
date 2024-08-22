@@ -1,5 +1,6 @@
 import { strapi, strapi_auth } from "./client";
 import { editor } from "./editor";
+import { isValidSVG } from "./libs/helpers";
 import { toast } from "./toast";
 
 let selectedEventFloorplan = null;
@@ -53,6 +54,9 @@ export async function saveFloorplan(data) {
   if (selectedEventFloorplan) return updateFloorplan(data); 
 
   try {
+    if (!isValidSVG(data.floorplan)) {
+      throw new Error('Invalid SVG');
+    }
     const response = await strapi_auth.post(`/aw-floorplans`, data);
     if (!response.data) throw new Error('Failed to save floorplan');
     selectedEventFloorplan = response.data;
