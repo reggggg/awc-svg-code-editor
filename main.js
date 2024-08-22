@@ -21,7 +21,6 @@ function getHomePageConstructor(eventId) {
     requestAnimationFrame(() => {
       home.init();
       events.setEvents(eventId);
-      
     });
   }
   return container;

@@ -22,6 +22,17 @@ body {
   border: 1px solid lightgray;
 }
 
+/* > [PREMIUM, CLASSIC, BASIC], > [SUPER], > [MEGA] - Different SVG structure */
+#output > svg #Map #Booths .available path:first-child {
+  fill: #2ecc71;
+}
+#output > svg #Map #Booths .available > g:first-child rect {
+  fill: #2ecc71;
+}
+#output > svg #Map #Booths .available > rect:first-child {
+  fill: #2ecc71;
+}
+
 #main {
   position: absolute;
   top: 56px;

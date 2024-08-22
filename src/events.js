@@ -21,6 +21,15 @@ export class Events {
   
   async setEvents(id) {
     const selectElement = document.getElementById('event-selector');
+    const btnInjectData = document.getElementById("inject");
+    const btnSave = document.getElementById("save");
+    const btnDownload = document.getElementById("download");
+    const btnUpload = document.getElementById("upload");
+
+    btnInjectData.disabled = true;
+    btnSave.disabled = true;
+    btnDownload.disabled = true;
+    btnUpload.disabled = true;
   
     // Set the select element to a loading state
     selectElement.innerHTML = '<option>Loading...</option>';
@@ -51,17 +60,15 @@ export class Events {
       if (matchedOption) {
         selectElement.value = matchedOption.value;
         await getFloorplan(selectElement.value);
+        btnInjectData.disabled = false;
+        btnSave.disabled = false;
+        btnDownload.disabled = false;
+        btnUpload.disabled = false;
       } else if (selectElement.options.length > 0) {
         // If there is no selected event
         selectElement.value = selectElement.options[0].value;
         editor.setValue(`Select event to write`);
         editor.updateOptions({ readOnly: true });
-        const btnSave = document.getElementById("save");
-        const btnDownload = document.getElementById("download");
-        const btnUpload = document.getElementById("upload");
-        btnSave.disabled = true;
-        btnDownload.disabled = true;
-        btnUpload.disabled = true;
       }
     } catch (error) {
       console.error(error.message);

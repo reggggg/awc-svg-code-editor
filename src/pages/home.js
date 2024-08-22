@@ -1,7 +1,8 @@
 import Split from 'split.js';
 import { Events } from '../events.js';
 import { initializeMonaco, editor } from '../editor.js';
-import { saveFloorplan } from '../floorplans.js';
+import { generateDataToInjectInFloorplan, saveFloorplan } from '../floorplans.js';
+import { toast } from '../toast.js';
 
 export class HomePage {
   constructor() {
@@ -13,6 +14,7 @@ export class HomePage {
             <select id="event-selector" class="form-control w-auto"></select>
             <button id="upload" class="btn btn-outline-secondary">Upload</button>
             <button id="download" class="btn btn-outline-secondary">Download</button>
+            <button id="inject" class="btn btn-warning">Inject Data</button>
             <button id="save" class="btn btn-success">Save</button>
           </div>
           <button id="logout" class="btn btn-danger">Logout</button>
@@ -45,9 +47,31 @@ export class HomePage {
       render();
     });
 
+    // Inject data
+    let isInjected = false;
+    const btnInjectData = document.getElementById("inject");
+    btnInjectData.addEventListener('click', async function() {
+      btnInjectData.disabled = true;
+      btnInjectData.textContent = 'Injecting...';
+
+      try {
+        if (isInjected === true) throw new Error('Data is already injected');
+
+        const isGenerateDataSuccess = await generateDataToInjectInFloorplan();
+        if (isGenerateDataSuccess) {
+          isInjected = true;
+        }
+      } catch (err) {
+        toast.error(err.message);
+      } finally {
+        btnInjectData.disabled = false;
+        btnInjectData.textContent = 'Inject Data';
+      }
+      
+    })
+
     // Save
     const btnSave = document.getElementById("save");
-
     btnSave.addEventListener('click', async function () {
       const events = new Events();
       let eventId = events.getSelectedEventId();

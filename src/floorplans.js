@@ -14,12 +14,39 @@ export async function getFloorplan(conferenceId) {
 
     editor.setValue(selectedEventFloorplan?.floorplan);
     editor.updateOptions({ readOnly: false });
+    return data;
   } catch (err) {
     // If there is no floorplan
     editor.setValue(`Write or upload your SVG here`);
     editor.updateOptions({ readOnly: false });
     console.error(err.message);
+    return null;
   }
+}
+
+export function generateDataToInjectInFloorplan() {
+  return new Promise((resolve) => {
+    const max_count = 99;
+    const letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
+    const containerElement = document.getElementById('Booths');
+
+    if (!containerElement) {
+      toast.error('The ID of the container of the booths does not match to `Booths`');
+      resolve(false);
+    }
+
+    letters.forEach(letter => {
+      for (let i = 1; i <= max_count; i++) {
+        const name = `${letter}${i.toString().padStart(2, '0')}`;
+        const element = containerElement.querySelector(`[id^=${name}]`);
+        if (element) {
+          element.classList.add('available');
+        }
+      }
+    });
+
+    resolve(true);
+  });
 }
 
 export async function saveFloorplan(data) {
