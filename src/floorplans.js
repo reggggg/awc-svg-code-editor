@@ -39,7 +39,7 @@ export function generateDataToInjectInFloorplan() {
     letters.forEach(letter => {
       for (let i = 0; i <= max_count; i++) {
         const name = `${letter}${i.toString().padStart(2, '0')}`;
-        const element = containerElement.querySelector(`[id^=${name}]`);
+        const element = containerElement.querySelector(`#${name}`);
         if (element) {
           element.classList.add('available');
         }
