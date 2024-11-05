@@ -27,7 +27,7 @@ export async function getFloorplan(conferenceId) {
 
 export function generateDataToInjectInFloorplan() {
   return new Promise((resolve) => {
-    const max_count = 99;
+    const max_count = 200;
     const letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K'];
     const containerElement = document.getElementById('Booths');
 
